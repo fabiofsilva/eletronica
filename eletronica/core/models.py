@@ -1,3 +1,57 @@
+# coding: utf-8
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
-# Create your models here.
+
+class Marca(models.Model):
+    descricao = models.CharField(verbose_name=_(u'Marca'), max_length=50)
+    
+    class Meta:
+        unique_together = ('descricao',)
+        ordering = ('descricao',)
+         
+    def __unicode__(self):
+        return self.descricao
+    
+class Modelo(models.Model):
+    marca = models.ForeignKey('Marca', verbose_name=_(u'Marca'))
+    descricao = models.CharField(verbose_name=_(u'Modelo'), max_length=50)
+    
+    class Meta:
+        unique_together = ('marca', 'descricao')
+        ordering = ('marca__descricao', 'descricao')
+    
+    def __unicode__(self):
+        return self.marca.descricao + u' - ' + self.descricao 
+
+class Defeito(models.Model):
+    descricao = models.CharField(verbose_name=_(u'Defeito'), max_length=100)
+    
+    class Meta:
+        unique_together = ('descricao',)
+        ordering = ('descricao',)
+        
+    def __unicode__(self):
+        return self.descricao
+    
+class Conserto(models.Model):
+    modelo = models.ForeignKey('Modelo', verbose_name=_(u'Modelo'))
+    defeito = models.ForeignKey('Defeito', verbose_name=_(u'Defeito'))
+    
+    class Meta:
+        unique_together = ('modelo', 'defeito')
+        ordering = ('modelo__descricao', 'defeito__descricao')
+        
+    def __unicode__(self):
+        return self.modelo.descricao + u' - ' + self.defeito.descricao
+    
+class Solucao(models.Model):
+    conserto = models.ForeignKey('Conserto', verbose_name=_(u'Conserto'))
+    solucao = models.TextField(verbose_name=_(u'Solução'))
+    
+    class Meta:
+        verbose_name = _(u'Solução')
+        verbose_name_plural = _(u'Soluções')
+        
+    def __unicode__(self):
+        return self.solucao[:30]
