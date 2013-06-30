@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse as r
 
 
 class Marca(models.Model):
@@ -40,10 +41,12 @@ class Conserto(models.Model):
     
     class Meta:
         unique_together = ('modelo', 'defeito')
-        ordering = ('modelo__descricao', 'defeito__descricao')
         
     def __unicode__(self):
         return self.modelo.descricao + u' - ' + self.defeito.descricao
+    
+    def get_absolute_url(self):
+        return r('core:conserto_detail', kwargs={'pk': self.pk})
     
 class Solucao(models.Model):
     conserto = models.ForeignKey('Conserto', verbose_name=_(u'Conserto'))

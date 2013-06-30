@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block head %}
+{{ block.super }}
+<script type="text/javascript">
+function repair_search(page){
+	var data = $('#search_form').serializeAll();
+	data['page'] = page;
+	$.post("{% url 'core:conserto_list' %}", data, function(data){
+		var elem = $('#results');
+		elem.empty();
+		elem.append(data);
+	});
+}
+
+$(document).ready(function(){
+	$('#btnsearch').click();
+});
+</script>
+{% endblock head %}
+
+{% block content %}
+<h1>Consulta Defeitos</h1>
+<div class="breadcrumb">
+    <form id="search_form" method="POST" action="." class="form-search">
+      {% csrf_token %}
+      <label for="txtmarca" class="bold">Marca:</label>
+      <input type="text" id="txtmarca" name="marca" />
+      <label for="txtmodelo">Modelo:</label>
+      <input type="text" id="txtmodelo" name="modelo" />
+      <label for="selectdefeitos">Defeito:</label>
+      <select id="selectdefeitos" name="defeito">
+        <option value="">---</option>
+        {% for defeito in defeitos %}
+          <option value="{{ defeito.pk }}">{{ defeito.descricao }}</option>
+        {% endfor %}
+      </select>
+      <input type="button" id="btnsearch" value="Consultar" onclick="repair_search(1)" class="btn btn-primary"/>
+  </form>
+</div>
+<div id="results"></div>
+{% endblock content %} 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<htmL>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}css/bootstrap.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="{{ STATIC_URL }}js/serializeAll.js"></script>
+  <title>Consertos de eletrônica</title>
+  {% block head %}{% endblock head %}
+</head>
+<body>
+  <div id="page" class="container">
+    <div id="header" class="row">
+    {% block header %}{% endblock header %}
+    </div>
+    <div id="content" class="row">
+    {% block content %}{% endblock content %}
+    </div>
+    <div id="footer" class="row">
+      <hr>
+      <div class="span10">
+        <p>&copy; 2013 - {% now "Y" %}. Eletrônica, some rights reserved.</p>
+      </div>
+      <div class="span2">
+        <p><a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a></p>
+      </div>
+    </div>   
+  </div>
+</body>
+</htmL>

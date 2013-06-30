@@ -10,6 +10,7 @@ class SolucaoInline(admin.StackedInline):
 class ConsertoAdmin(admin.ModelAdmin):
     model = Conserto
     inlines = [SolucaoInline]
+    ordering = ('modelo__descricao', 'defeito__descricao')
     
 admin.site.register(Marca, admin.ModelAdmin)
 admin.site.register(Modelo, admin.ModelAdmin)

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="navbar-inner">
+  <h3>{{ conserto.modelo }} - {{ conserto.defeito.descricao }}</h3>
+</div>
+<hr>
+<div class="hero-unit">
+{% for solucao in conserto.solucao_set.all %}
+  <h3>Solução #{{ forloop.counter }}:</h3>
+  <p>{{ solucao.solucao }}</p>
+{% endfor %}
+</div>
+{% endblock content %}

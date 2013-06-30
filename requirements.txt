@@ -5,4 +5,5 @@ gunicorn==0.17.4
 South==0.8.1
 boto==2.9.5
 django-storages==1.1.8
+model-mommy==1.0
 psycopg2
