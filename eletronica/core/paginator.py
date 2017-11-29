@@ -1,4 +1,3 @@
-# original copy from https://djangosnippets.org/snippets/773/
 import math
 from django.core.paginator import \
     Paginator, QuerySetPaginator, Page, InvalidPage

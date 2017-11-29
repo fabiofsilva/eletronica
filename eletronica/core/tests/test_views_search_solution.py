@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.test import TestCase
-from django.urls import reverse as r
+from django.core.urlresolvers import reverse as r
 from django.core.paginator import Page
 from model_mommy import mommy
 

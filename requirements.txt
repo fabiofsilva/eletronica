@@ -1,8 +1,9 @@
-Django==1.11.7
-Unipath==1.1
+Django==1.5.1
+Unipath==1.0
 dj-database-url==0.2.1
 gunicorn==0.17.4
+South==0.8.1
 boto==2.9.5
 django-storages==1.1.8
-model-mommy==1.4
+model-mommy==1.0
 psycopg2

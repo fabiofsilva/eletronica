@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.views.generic import RedirectView
-from django.urls import reverse_lazy as r
+from django.core.urlresolvers import reverse_lazy as r
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from eletronica.core.paginator import DiggPaginator as Paginator
