@@ -1,11 +1,12 @@
 # coding: utf-8
-from django.conf.urls import patterns, url
-from eletronica.core.views import HomePageRedirectView
+from django.conf.urls import url
+from . import views
 
+app_name='core'
 
-urlpatterns = patterns('eletronica.core.views',
-                       url(r'^consertos/$', 'search_repair', name='search_repair'),
-                       url(r'^lista-de-consertos/$', 'conserto_list', name='conserto_list'),
-                       url(r'^consertos/(?P<pk>\d+)/$', 'conserto_detail', name='conserto_detail'),
-                       url(r'^$', HomePageRedirectView.as_view(), name='homepage'),
-)
+urlpatterns = [
+	url(r'^consertos/$', views.search_repair, name='search_repair'),
+    url(r'^lista-de-consertos/$', views.conserto_list, name='conserto_list'),
+    url(r'^consertos/(?P<pk>\d+)/$', views.conserto_detail, name='conserto_detail'),
+    url(r'^$', views.HomePageRedirectView.as_view(), name='homepage')
+]
