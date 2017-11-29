@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.test import TestCase
-from django.core.urlresolvers import reverse as r
+from django.urls import reverse as r
 from model_mommy import mommy
 from eletronica.core.models import Conserto
 
