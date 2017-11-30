@@ -16,3 +16,4 @@ Scripts
 .pydevproject
 eletronica/static
 .env
+.coverage
