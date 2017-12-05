@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('eletronica.core.urls'))    
+    url(r'', include('eletronica.core.urls'))    
 ]
 
 urlpatterns += staticfiles_urlpatterns()
