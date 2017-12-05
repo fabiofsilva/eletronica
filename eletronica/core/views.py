@@ -1,13 +1,13 @@
 # coding: utf-8
-from django.views.generic import RedirectView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy as r
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from eletronica.core.paginator import DiggPaginator as Paginator
 from eletronica.core.models import Defeito, Conserto
 
-class HomePageRedirectView(RedirectView):
-    url = r('admin:index')
+class HomePageView(TemplateView):
+    template_name = 'core/homepage.html'
     
 def search_repair(request):
     return render(request, 'core/search_repair.html', {'defeitos': Defeito.objects.all()})

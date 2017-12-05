@@ -1,14 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'core/base_site.html' %}
 
 {% block content %}
-<div class="navbar-inner">
-  <h3>{{ conserto.modelo }} - {{ conserto.defeito.descricao }}</h3>
-</div>
-<hr>
-<div class="hero-unit">
+<h3>{{ conserto.modelo }} - {{ conserto.defeito.descricao }}</h3>
 {% for solucao in conserto.solucao_set.all %}
-  <h3>Solução #{{ forloop.counter }}:</h3>
-  <p>{{ solucao.solucao }}</p>
-{% endfor %}
+<div class="well">
+    <h4>Solução #{{ forloop.counter }}:</h3>
+    <p>{{ solucao.solucao }}</p>
 </div>
+{% endfor %}
+
+<div><a class="btn btn-default" href="{% url 'core:search_repair' %}">Voltar</a></div>  
 {% endblock content %}

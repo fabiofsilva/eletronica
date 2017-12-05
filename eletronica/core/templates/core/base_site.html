@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Consertos de eletrônica{% endblock title %}
+
+{% block header %}
+<nav>
+    <ul class="nav nav-pills pull-right">
+        <li><a href="{% url 'core:homepage' %}">Home</a></li>
+        <li><a href="{% url 'core:search_repair' %}">Consertos</a></li>
+        <li><a href="{% url 'admin:index' %}">Administração</a></li>
+    </ul>
+</nav>
+
+<h3 class="text-muted">Eletrônica</h3>
+{% endblock header %}
+
+
+{% block footer %}
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <p>&copy; 2013 - {% now "Y" %}. Eletrônica, some rights reserved.</p>
+    </div>
+
+    <div class="col-xs-6 col-md-4">
+        <p class="text-right"><a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a></p>
+    </div>
+</div>
+{% endblock footer %}
