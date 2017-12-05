@@ -20,8 +20,9 @@ class SearchRepairTest(TestCase):
     def test_html(self):
         'HTML deve conter inputs'
         self.assertContains(self.resp, '<form')
-        self.assertContains(self.resp, '<select')        
-        self.assertContains(self.resp, '<input', 4)
+        self.assertContains(self.resp, '<select') 
+        # Leva em consideração o input csrfmiddlewaretoken       
+        self.assertContains(self.resp, '<input', 3)
         self.assertContains(self.resp, '<div id="results"')
         self.assertContains(self.resp, 'type="text"', 2)
         self.assertContains(self.resp, 'type="button"')
@@ -52,10 +53,10 @@ class SearchRepairListTest(TestCase):
         'HTML deve conter uma tabela com lista de consertos'
         self.assertContains(self.resp, '<table')
         self.assertContains(self.resp, '<a href="/consertos/1/">')
-        self.assertContains(self.resp, '<div class="pagination pagination-centered"')
-        self.assertContains(self.resp, '<li class="disabled"><span>1</span></li>')
-        self.assertContains(self.resp, '<li><a href="#" onclick="repair_search(2)" class="previous">2</a></li>')
-        self.assertContains(self.resp, '<a href="#" onclick="repair_search(2)" class="next">Next</a>')
+        self.assertContains(self.resp, '<nav aria-label="Page navigation"')
+        self.assertContains(self.resp, '<li class="active"><span>1</span></li>')
+        self.assertContains(self.resp, '<li><a href="#" onclick="repair_search(2)">2</a></li>')
+        self.assertContains(self.resp, '<a href="#" onclick="repair_search(2)" aria-label="Next">Next</a>')
                 
     def test_context(self):
         'Contexto deve conter uma instância de Page'

@@ -1,43 +1,50 @@
 {% if consertos %}
-  <table class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Defeito</th>
-      </tr>
-    </thead>
-  {% for conserto in consertos %}
-    <tbody>
-      <tr>
-        <td><a href="{{ conserto.get_absolute_url }}">{{ conserto.pk }}</a></td>
-        <td>{{ conserto.modelo.marca }}</td>
-        <td>{{ conserto.modelo.descricao }}</td>
-        <td>{{ conserto.defeito }}</td>  
-      </tr>
-    </tbody>
-  {% endfor %}
-  </table>  
-  <div class="pagination pagination-centered">
-    <ul>
-    {% if consertos.has_previous %}
-      <li><a href="#" onclick="repair_search({{ consertos.previous_page_number }})" class="previous">Previous</a></li>
-    {% endif %}
-    {% for pagenum in consertos.page_range %}  
-      {% if not pagenum %} 
-        <li class="previous"><a href="#">...</a></li>  
-      {% elif pagenum == consertos.number %}
-        <li class="disabled"><span>{{ pagenum }}</span></li>
-      {% else %}
-        <li><a href="#" onclick="repair_search({{ pagenum }})" class="previous">{{ pagenum }}</a></li>  
-      {% endif %}
-    {% endfor %}
-    {% if consertos.has_next %}
-      <li><a href="#" onclick="repair_search({{ consertos.next_page_number }})" class="next">Next</a></li>
-    {% endif %}    
-    </ul>  
-  </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed">
+            <thead>
+              <tr class="active">
+                <th>#</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Defeito</th>
+              </tr>
+            </thead>
+            {% for conserto in consertos %}
+                <tbody>
+                    <tr class="{% cycle 'info' '' %}">
+                        <td><a href="{{ conserto.get_absolute_url }}">{{ conserto.pk }}</a></td>
+                        <td>{{ conserto.modelo.marca }}</td>
+                        <td>{{ conserto.modelo.descricao }}</td>
+                        <td>{{ conserto.defeito }}</td>  
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>  
+    </div>
+
+    <div class="text-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination center">
+                {% if consertos.has_previous %}
+                    <li><a href="#" onclick="repair_search({{ consertos.previous_page_number }})" aria-label="Previous">Previous</a></li>
+                {% endif %}
+
+                {% for pagenum in consertos.page_range %}  
+                  {% if not pagenum %} 
+                      <li><a href="#">...</a></li>  
+                  {% elif pagenum == consertos.number %}
+                      <li class="active"><span>{{ pagenum }}</span></li>
+                  {% else %}
+                      <li><a href="#" onclick="repair_search({{ pagenum }})">{{ pagenum }}</a></li>  
+                  {% endif %}
+                {% endfor %}
+
+                {% if consertos.has_next %}
+                    <li><a href="#" onclick="repair_search({{ consertos.next_page_number }})" aria-label="Next">Next</a></li>
+                {% endif %}    
+            </ul>  
+        </nav>
+    </div>  
 {% else %}
-  <p>Nenhum resultado encontrado</p>
+    <p>Nenhum resultado encontrado</p>
 {% endif %}
