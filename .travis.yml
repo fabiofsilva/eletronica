@@ -5,8 +5,8 @@ python:
 install:
   - pip install -r requirements-tests.txt  
 
- before_script:
+before_script:
   - cp .env.example .env
-  
+
 script:
  - python manage.py  test --settings=eletronica.settings.development
