@@ -1,25 +1,30 @@
 # coding: utf-8
-import os
-import dj_database_url
 from unipath import Path
+from decouple import config, Csv
+from dj_database_url import parse as db_url
 
 # Aponta para o dir eletronica
 PROJECT_DIR = Path(__file__).parent.parent
 
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ADMINS = (
-     (os.environ.get('ADMIN_NAME', ''), os.environ.get('ADMIN_EMAIL', '')),
+     (config('ADMIN_NAME', default=''), config('ADMIN_EMAIL', default='')),
 )
 
 MANAGERS = ADMINS
 
-DATABASES = { 
-             'default': dj_database_url.config(default='sqlite:///' + PROJECT_DIR.child('database.db')),
+DATABASES = {
+                'default': config(
+                                    'DATABASE_URL',
+                                    default='sqlite:///' + PROJECT_DIR.child('database.db'),
+                                    cast=db_url
+                ),
 }
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['127.0.0.1', '.localhost', '.herokuapp.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -44,10 +49,10 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='')
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
@@ -88,7 +93,7 @@ STATICFILES_FINDERS = [
 ]
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'g@!_z=ztega_^9hr2w^54^p!dek3bwg_@o9busy3ta^*$rbj!y'
+SECRET_KEY = config('SECRET_KEY')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,6 +145,11 @@ INSTALLED_APPS = [
     'eletronica.core',
 ]
 
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
