@@ -3,6 +3,7 @@ from unipath import Path
 from decouple import config, Csv
 from dj_database_url import parse as db_url
 
+
 # Aponta para o dir eletronica
 PROJECT_DIR = Path(__file__).parent.parent
 
@@ -86,10 +87,10 @@ STATICFILES_DIRS = [
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = [
+TATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 ]
 
 # Make this unique, and don't share it with anybody.
@@ -130,7 +131,7 @@ TEMPLATES = [
         },
     },
 ]
-# Python dotted path to the WSGI application used by Django's runserver.
+# Python dotted pah to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'eletronica.wsgi.application'
 
 INSTALLED_APPS = [
@@ -141,7 +142,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'storages', 
+    'storages',
     'eletronica.core',
 ]
 
@@ -164,7 +165,7 @@ LOGGING = {
         },
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue'
-        },                
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -172,11 +173,11 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
-            'filters': ['require_debug_true'],            
+            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-        },                 
+        },
     },
     'loggers': {
         'django.request': {
