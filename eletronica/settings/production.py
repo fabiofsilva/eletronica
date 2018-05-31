@@ -143,7 +143,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'storages',
-    'eletronica.core',
+    'eletronica.core.apps.CoreConfig',
 ]
 
 EMAIL_HOST = config('EMAIL_HOST', default='localhost')
