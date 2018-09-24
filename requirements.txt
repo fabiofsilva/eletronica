@@ -2,7 +2,7 @@ Django==1.11.15
 Unipath==1.1
 dj-database-url==0.5.0
 gunicorn==19.8.1
-boto3==1.9.9
+boto3==1.9.10
 django-storages==1.7.1
 python-decouple==3.1
 psycopg2==2.7.5
