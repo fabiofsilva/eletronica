@@ -17,3 +17,4 @@ Scripts
 eletronica/static
 .env
 .coverage
+.idea
