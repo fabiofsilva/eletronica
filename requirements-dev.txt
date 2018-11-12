@@ -1,5 +1,5 @@
 -r requirements.txt
 model-mommy==1.6.0
 django-nose==1.4.6
-coverage==4.5.1
+coverage==4.5.2
 flake8==3.6.0
