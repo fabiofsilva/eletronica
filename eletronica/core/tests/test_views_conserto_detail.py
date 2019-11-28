@@ -1,4 +1,3 @@
-# coding: utf-8
 from django.test import TestCase
 from django.urls import reverse as r
 from model_mommy import mommy
@@ -7,9 +6,9 @@ from eletronica.core.models import Conserto
 
 class ConsertoDetailTest(TestCase):
     def setUp(self):
-        modelo = mommy.make('core.Modelo', marca__descricao=u'CCE', descricao='HPS-2071')
-        conserto = mommy.make('core.Conserto', modelo=modelo, defeito__descricao=u'NÃO LIGA')
-        mommy.make('core.Solucao', conserto=conserto, solucao=u'Ver capacitor C1', _quantity=2)
+        modelo = mommy.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
+        conserto = mommy.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
+        mommy.make('core.Solucao', conserto=conserto, solucao='Ver capacitor C1', _quantity=2)
         conserto.solucao_set.create()
         self.resp = self.client.get(r('core:conserto_detail', kwargs={'pk': conserto.pk}))
 
@@ -28,5 +27,5 @@ class ConsertoDetailTest(TestCase):
 
     def test_html(self):
         """Html deve conter informações do conserto e soluções"""
-        self.assertContains(self.resp, u'CCE - HPS-2071 - NÃO LIGA')
-        self.assertContains(self.resp, u'Ver capacitor C1', 2)
+        self.assertContains(self.resp, 'CCE - HPS-2071 - NÃO LIGA')
+        self.assertContains(self.resp, 'Ver capacitor C1', 2)

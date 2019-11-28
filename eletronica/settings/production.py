@@ -1,8 +1,6 @@
-# coding: utf-8
 from unipath import Path
 from decouple import config, Csv
 from dj_database_url import parse as db_url
-
 
 # Aponta para o dir eletronica
 PROJECT_DIR = Path(__file__).parent.parent
@@ -10,17 +8,17 @@ PROJECT_DIR = Path(__file__).parent.parent
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ADMINS = (
-     (config('ADMIN_NAME', default=''), config('ADMIN_EMAIL', default='')),
+    (config('ADMIN_NAME', default=''), config('ADMIN_EMAIL', default='')),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
-                'default': config(
-                                    'DATABASE_URL',
-                                    default='sqlite:///' + PROJECT_DIR.child('database.db'),
-                                    cast=db_url
-                ),
+    'default': config(
+        'DATABASE_URL',
+        default='sqlite:///' + PROJECT_DIR.child('database.db'),
+        cast=db_url
+    ),
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
