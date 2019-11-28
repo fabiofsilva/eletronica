@@ -1,4 +1,3 @@
-# coding: utf-8
 from django.test import TestCase
 from django.db import IntegrityError
 from eletronica.core.models import Conserto, Defeito, Marca
@@ -6,25 +5,25 @@ from eletronica.core.models import Conserto, Defeito, Marca
 
 class ConsertoModelTest(TestCase):
     def setUp(self):
-        marca = Marca.objects.create(descricao=u'Marca')
-        modelo = marca.modelo_set.create(descricao=u'Modelo')
-        defeito = Defeito.objects.create(descricao=u'Defeito')
+        marca = Marca.objects.create(descricao='Marca')
+        modelo = marca.modelo_set.create(descricao='Modelo')
+        defeito = Defeito.objects.create(descricao='Defeito')
         self.conserto = Conserto.objects.create(modelo=modelo, defeito=defeito)
 
     def test_create(self):
         """Deve criar um conserto"""
         self.assertEqual(1, self.conserto.pk)
 
-    def test_unicode(self):
-        """Unicode deve retornar o modelo e o defeito"""
-        self.assertEqual(u'Modelo - Defeito', unicode(self.conserto))
+    def test_str(self):
+        """A representação da instância deve retornar a descrição do modelo e do defeito"""
+        self.assertEqual('Modelo - Defeito', str(self.conserto))
 
 
 class ConsertoUniqueTest(TestCase):
     def setUp(self):
-        marca = Marca.objects.create(descricao=u'Marca')
-        self.modelo = marca.modelo_set.create(descricao=u'Modelo')
-        self.defeito = Defeito.objects.create(descricao=u'Defeito')
+        marca = Marca.objects.create(descricao='Marca')
+        self.modelo = marca.modelo_set.create(descricao='Modelo')
+        self.defeito = Defeito.objects.create(descricao='Defeito')
         Conserto.objects.create(modelo=self.modelo, defeito=self.defeito)
 
     def test_unique(self):
@@ -35,16 +34,16 @@ class ConsertoUniqueTest(TestCase):
 
 class SolucaoModelTest(TestCase):
     def setUp(self):
-        marca = Marca.objects.create(descricao=u'Marca')
-        modelo = marca.modelo_set.create(descricao=u'Modelo')
-        defeito = Defeito.objects.create(descricao=u'Defeito')
+        marca = Marca.objects.create(descricao='Marca')
+        modelo = marca.modelo_set.create(descricao='Modelo')
+        defeito = Defeito.objects.create(descricao='Defeito')
         conserto = Conserto.objects.create(modelo=modelo, defeito=defeito)
-        self.solucao = conserto.solucao_set.create(solucao=u'Solução')
+        self.solucao = conserto.solucao_set.create(solucao='Solução')
 
     def test_create(self):
         """Deve criar uma solução"""
         self.assertEqual(1, self.solucao.pk)
 
-    def test_unicode(self):
-        """Unicode deve retornar a solução"""
-        self.assertEqual(u'Solução', unicode(self.solucao))
+    def test_str(self):
+        """A representação da instância deve retornar o texto da solução"""
+        self.assertEqual('Solução', str(self.solucao))

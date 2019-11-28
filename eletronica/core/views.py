@@ -1,9 +1,8 @@
-# coding: utf-8
 from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger
-from eletronica.core.paginator import DiggPaginator as Paginator
-from eletronica.core.models import Defeito, Conserto
+from .paginator import DiggPaginator as Paginator
+from .models import Defeito, Conserto
 
 
 class HomePageView(TemplateView):

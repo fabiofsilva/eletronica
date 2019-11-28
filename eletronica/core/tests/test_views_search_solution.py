@@ -1,4 +1,3 @@
-# coding: utf-8
 from django.test import TestCase
 from django.urls import reverse as r
 from django.core.paginator import Page
@@ -66,22 +65,22 @@ class SearchRepairListTest(TestCase):
 
 class SearchRepairListFilterTest(TestCase):
     def setUp(self):
-        modelo = mommy.make('core.Modelo', marca__descricao=u'CCE', descricao='HPS-2071')
-        mommy.make('core.Conserto', modelo=modelo, defeito__descricao=u'NÃO LIGA')
-        modelo = mommy.make('core.Modelo', marca__descricao=u'PHILCO', descricao='PC-1416')
-        mommy.make('core.Conserto', modelo=modelo, defeito__descricao=u'FONTE ALTA')
+        modelo = mommy.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
+        mommy.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
+        modelo = mommy.make('core.Modelo', marca__descricao='PHILCO', descricao='PC-1416')
+        mommy.make('core.Conserto', modelo=modelo, defeito__descricao='FONTE ALTA')
 
     def test_post_marca(self):
         """Teste com filtro por marca"""
-        self.result_expected({'marca': u'CCE'})
+        self.result_expected({'marca': 'CCE'})
 
     def test_post_modelo(self):
         """Teste com filtro por modelo"""
-        self.result_expected({'modelo': u'HPS-2071'})
+        self.result_expected({'modelo': 'HPS-2071'})
 
     def test_post_defeito(self):
         """Teste com filtro por defeito"""
-        self.result_expected({'defeito': u'1'})
+        self.result_expected({'defeito': '1'})
 
     def result_expected(self, data):
         resp = self.client.post(r('core:conserto_list'), data)

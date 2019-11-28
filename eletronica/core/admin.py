@@ -1,6 +1,5 @@
-# coding: utf-8
 from django.contrib import admin
-from eletronica.core.models import Marca, Modelo, Defeito, Solucao, Conserto
+from .models import Marca, Modelo, Defeito, Solucao, Conserto
 
 
 class SolucaoInline(admin.StackedInline):
