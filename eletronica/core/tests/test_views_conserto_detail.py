@@ -1,14 +1,14 @@
 from django.test import TestCase
 from django.urls import reverse as r
-from model_mommy import mommy
+from model_bakery import baker
 from eletronica.core.models import Conserto
 
 
 class ConsertoDetailTest(TestCase):
     def setUp(self):
-        modelo = mommy.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
-        conserto = mommy.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
-        mommy.make('core.Solucao', conserto=conserto, solucao='Ver capacitor C1', _quantity=2)
+        modelo = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
+        conserto = baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
+        baker.make('core.Solucao', conserto=conserto, solucao='Ver capacitor C1', _quantity=2)
         conserto.solucao_set.create()
         self.resp = self.client.get(r('core:conserto_detail', kwargs={'pk': conserto.pk}))
 

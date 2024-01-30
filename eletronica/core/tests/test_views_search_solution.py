@@ -1,7 +1,7 @@
+from django.core.paginator import Page
 from django.test import TestCase
 from django.urls import reverse as r
-from django.core.paginator import Page
-from model_mommy import mommy
+from model_bakery import baker
 
 
 class SearchRepairTest(TestCase):
@@ -37,7 +37,7 @@ class SearchRepairTest(TestCase):
 
 class SearchRepairListTest(TestCase):
     def setUp(self):
-        mommy.make('core.Conserto', 30)
+        baker.make('core.Conserto', 30)
         self.resp = self.client.post(r('core:conserto_list'))
 
     def test_post(self):
@@ -65,10 +65,10 @@ class SearchRepairListTest(TestCase):
 
 class SearchRepairListFilterTest(TestCase):
     def setUp(self):
-        modelo = mommy.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
-        mommy.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
-        modelo = mommy.make('core.Modelo', marca__descricao='PHILCO', descricao='PC-1416')
-        mommy.make('core.Conserto', modelo=modelo, defeito__descricao='FONTE ALTA')
+        modelo = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
+        baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
+        modelo = baker.make('core.Modelo', marca__descricao='PHILCO', descricao='PC-1416')
+        baker.make('core.Conserto', modelo=modelo, defeito__descricao='FONTE ALTA')
 
     def test_post_marca(self):
         """Teste com filtro por marca"""
