@@ -1,0 +1,48 @@
+[project]
+name = "eletronica"
+version = "0.1.0"
+description = "Plataforma web para consulta de diagnóstico de defeitos em equipamentos eletrônicos"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "django<5.3",
+    "django-environ>=0.12.0",
+    "psycopg>=3.3.2",
+]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.13.0",
+    "django-debug-toolbar>=6.1.0",
+    "model-bakery>=1.20.5",
+    "pre-commit>=4.5.0",
+    "ruff>=0.14.8",
+]
+prod = [
+    "gunicorn>=23.0.0",
+]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    "*/migrations/*",
+    "*/venv/*",
+    "development.py",
+    "production.py",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+# Seleciona os conjuntos de regras de linting a serem aplicados:
+# E/W: Erros e Warnings do pycodestyle (equivalente ao Flake8)
+# F: Erros do Pyflakes (erros lógicos)
+# I: Regras de ordenação de imports (equivalente ao isort)
+# PL: Regras do Pylint (regras de convenção e possíveis bugs)
+select = ["E", "W", "F", "I", "PL"]
+# Regras a serem ignoradas:
+# PLR2004: "Magic number" — Ignora o erro quando um número é comparado a um valor constante literal (e.g., if status == 2).
+ignore = [
+    "PLR2004",
+]
+
+[tool.ruff.format]
+quote-style = "single"

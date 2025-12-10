@@ -1,4 +1,4 @@
-name: Python application
+name: Django CI
 
 on:
   pull_request:
@@ -6,24 +6,43 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      # CRUCIAL: Define qual settings o Django usará (para rodar os testes)
+      DJANGO_SETTINGS_MODULE: eletronica.settings.test
+      PYTHON: python
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v1
+    # Copia os arquivos deste repositório
+    - name: Checkout Code
+      uses: actions/checkout@v5
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
+    # --- 1. Preparação do Ambiente e Dependências (Usando UV) ---
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
     - name: Copying configurations
+      run: cp .env.example .env
+
+    - name: Install dependencies with uv from uv.lock
+      # Instala as dependências base e o grupo 'dev' do uv.lock
       run: |
-        cp .env.example .env
-    - name: Install dependencies
+        uv sync --locked --group dev
+
+    # --- 2. Linting (Usando Ruff) ---
+    - name: Lint with Ruff
+      # Executa o linter no ambiente uv
       run: |
-        pip install -r requirements-dev.txt
-    - name: Lint with flake8
-      run: |
-        flake8
+        uv run ruff check .
+
+    # --- 3. Execução dos Testes ---
     - name: Run Tests
+      # CRUCIAL: Move para a pasta 'app/' onde o manage.py está
+      working-directory: ./app
       run: |
-        python manage.py  test --settings=eletronica.settings.development
+        # Executa o comando test. O DJANGO_SETTINGS_MODULE já está definido.
+        uv run python manage.py test

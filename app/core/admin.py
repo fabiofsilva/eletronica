@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Marca, Modelo, Defeito, Solucao, Conserto
+
+from .models import Conserto, Defeito, Marca, Modelo, Solucao
 
 
 class SolucaoInline(admin.StackedInline):

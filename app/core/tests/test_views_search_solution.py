@@ -37,7 +37,8 @@ class SearchRepairTest(TestCase):
 
 class SearchRepairListTest(TestCase):
     def setUp(self):
-        baker.make('core.Conserto', 30)
+        conserto = baker.make('core.Conserto', 30)
+        self.conserto_pk = conserto[0].pk
         self.resp = self.client.post(r('core:conserto_list'))
 
     def test_post(self):
@@ -51,7 +52,7 @@ class SearchRepairListTest(TestCase):
     def test_html(self):
         """HTML deve conter uma tabela com lista de consertos"""
         self.assertContains(self.resp, '<table')
-        self.assertContains(self.resp, '<a href="/consertos/1/">')
+        self.assertContains(self.resp, f'<a href="/consertos/{self.conserto_pk}/">')
         self.assertContains(self.resp, '<nav aria-label="Page navigation"')
         self.assertContains(self.resp, '<li class="active"><span>1</span></li>')
         self.assertContains(self.resp, '<li><a href="#" onclick="repair_search(2)">2</a></li>')
@@ -65,24 +66,31 @@ class SearchRepairListTest(TestCase):
 
 class SearchRepairListFilterTest(TestCase):
     def setUp(self):
-        modelo = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
-        baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
-        modelo = baker.make('core.Modelo', marca__descricao='PHILCO', descricao='PC-1416')
-        baker.make('core.Conserto', modelo=modelo, defeito__descricao='FONTE ALTA')
+        # 1. Cria o primeiro conserto (esperado como resultado dos filtros)
+        nao_liga = baker.make('core.Defeito', descricao='NÃO LIGA')
+        modelo_cce = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
+        baker.make('core.Conserto', modelo=modelo_cce, defeito=nao_liga)
+        # 2. Cria o segundo conserto (esperado ser excluído pelos filtros)
+        fonte_alta = baker.make('core.Defeito', descricao='FONTE ALTA')
+        modelo_philco = baker.make('core.Modelo', marca__descricao='PHILCO', descricao='PC-1416')
+        baker.make('core.Conserto', modelo=modelo_philco, defeito=fonte_alta)
+        # Armazena o PK do primeiro defeito para uso no teste de filtro
+        self.defeito_pk = nao_liga.pk
 
     def test_post_marca(self):
-        """Teste com filtro por marca"""
+        """Deve filtrar e retornar apenas o conserto da marca 'CCE'."""
         self.result_expected({'marca': 'CCE'})
 
     def test_post_modelo(self):
-        """Teste com filtro por modelo"""
+        """Deve filtrar e retornar apenas o conserto do modelo 'HPS-2071'."""
         self.result_expected({'modelo': 'HPS-2071'})
 
     def test_post_defeito(self):
-        """Teste com filtro por defeito"""
-        self.result_expected({'defeito': '1'})
+        """Deve filtrar e retornar apenas o conserto com o defeito 'NÃO LIGA' (usando o PK)."""
+        self.result_expected({'defeito': self.defeito_pk})
 
     def result_expected(self, data):
+        """Verifica se a resposta contém o conserto CCE/HPS-2071 e exclui o conserto PHILCO/PC-1416."""
         resp = self.client.post(r('core:conserto_list'), data)
         self.assertContains(resp, '<td>CCE</td>')
         self.assertContains(resp, '<td>HPS-2071</td>')

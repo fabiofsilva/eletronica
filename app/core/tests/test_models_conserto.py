@@ -1,6 +1,7 @@
-from django.test import TestCase
 from django.db import IntegrityError
-from eletronica.core.models import Conserto, Defeito, Marca
+from django.test import TestCase
+
+from core.models import Conserto, Defeito, Marca
 
 
 class ConsertoModelTest(TestCase):

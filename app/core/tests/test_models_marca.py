@@ -1,6 +1,7 @@
-from django.test import TestCase
 from django.db import IntegrityError
-from eletronica.core.models import Marca, Modelo
+from django.test import TestCase
+
+from core.models import Marca, Modelo
 
 
 class MarcaModelTest(TestCase):
@@ -9,7 +10,8 @@ class MarcaModelTest(TestCase):
 
     def test_create(self):
         """Deve criar uma marca"""
-        self.assertEqual(1, self.marca.pk)
+        self.assertIsNotNone(self.marca.pk)
+        self.assertEqual(1, Marca.objects.count())
 
     def test_str(self):
         """A representação da instância deve retornar a descrição da marca"""
@@ -33,7 +35,8 @@ class ModeloModelTest(TestCase):
 
     def test_create(self):
         """Deve criar um modelo"""
-        self.assertEqual(1, self.modelo.pk)
+        self.assertIsNotNone(self.modelo.pk)
+        self.assertEqual(1, Modelo.objects.count())
 
     def test_str(self):
         """A representação da instância deve retornar a marca e o modelo"""

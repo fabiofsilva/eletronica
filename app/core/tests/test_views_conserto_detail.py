@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse as r
 from model_bakery import baker
-from eletronica.core.models import Conserto
+
+from core.models import Conserto
 
 
 class ConsertoDetailTest(TestCase):

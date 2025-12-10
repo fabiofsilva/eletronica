@@ -1,8 +1,9 @@
-from django.views.generic import TemplateView
-from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import TemplateView
+
+from .models import Conserto, Defeito
 from .paginator import DiggPaginator as Paginator
-from .models import Defeito, Conserto
 
 
 class HomePageView(TemplateView):
