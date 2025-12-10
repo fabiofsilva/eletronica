@@ -1,0 +1,86 @@
+/* --------------------------------------------------------------------------
+   LAYOUT BASE
+-------------------------------------------------------------------------- */
+
+/* Permite que o footer fique sempre no fim da página */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+                 "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* A área principal ocupa completamente o espaço disponível */
+main {
+    flex: 1;
+}
+
+/* Espaço para a navbar fixa — mobile first */
+body {
+    padding-top: 60px;
+}
+
+@media (min-width: 768px) {
+    body {
+        padding-top: 90px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   CORES CUSTOMIZADAS
+-------------------------------------------------------------------------- */
+
+:root {
+    --bs-primary-blue: #10529A;
+    --bs-secondary-cyan: #2563EB;
+    --bs-accent-green: #10B981;
+    --bs-background-light: #F9FAFB;
+}
+
+/* --------------------------------------------------------------------------
+   UTILITÁRIOS DE CORES
+-------------------------------------------------------------------------- */
+
+.bg-primary-blue {
+    background-color: var(--bs-primary-blue) !important;
+}
+
+.bg-secondary-cyan {
+    background-color: var(--bs-secondary-cyan) !important;
+}
+
+.bg-accent-green {
+    background-color: var(--bs-accent-green) !important;
+}
+
+.text-primary-blue {
+    color: var(--bs-primary-blue) !important;
+}
+
+.text-secondary-cyan {
+    color: var(--bs-secondary-cyan) !important;
+}
+
+.border-accent-green {
+    border-color: var(--bs-accent-green) !important;
+}
+
+/* --------------------------------------------------------------------------
+   ELEMENTOS E COMPONENTES
+-------------------------------------------------------------------------- */
+
+/* Estilo usado no detalhe */
+.border-left-accent {
+    border-left: 4px solid var(--bs-accent-green);
+}
+
+/* Estilo usado na página de busca */
+.list-group-item a {
+    text-decoration: none;
+}

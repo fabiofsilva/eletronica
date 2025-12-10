@@ -28,5 +28,5 @@ class ConsertoDetailTest(TestCase):
 
     def test_html(self):
         """Html deve conter informações do conserto e soluções"""
-        self.assertContains(self.resp, 'CCE - HPS-2071 - NÃO LIGA')
+        self.assertContains(self.resp, 'CCE - HPS-2071 - Defeito: NÃO LIGA')
         self.assertContains(self.resp, 'Ver capacitor C1', 2)

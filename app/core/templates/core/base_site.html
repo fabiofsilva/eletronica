@@ -1,28 +1,50 @@
 {% extends 'base.html' %}
 
-{% block title %}Consertos de eletrônica{% endblock title %}
+{% block title %}Plataforma de Diagnóstico{% endblock title %}
 
 {% block header %}
-<nav>
-    <ul class="nav nav-pills pull-right">
-        <li><a href="{% url 'core:homepage' %}">Home</a></li>
-        <li><a href="{% url 'core:search_repair' %}">Consertos</a></li>
-        <li><a href="{% url 'admin:index' %}">Administração</a></li>
-    </ul>
-</nav>
+  <header class="bg-primary-blue shadow-lg fixed-top">
+    <div class="container-lg">
+      <nav class="navbar navbar-expand-lg p-3">
+        <a class="navbar-brand text-white fw-bold" href="{% url 'core:homepage' %}">Plataforma de Diagnóstico</a>
 
-<h3 class="text-muted">Eletrônica</h3>
+        <button class="navbar-toggler text-white border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+               fill="white" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 010-1h11a.5.5 0 010 1h-11zm0-4a.5.5 0 010-1h11a.5.5 0 010 1h-11zm0-4a.5.5 0 010-1h11a.5.5 0 010 1h-11z"/>
+          </svg>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="{% url 'core:homepage' %}" class="btn btn-link text-white text-decoration-none">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'core:search_repair' %}" class="btn btn-link text-white text-decoration-none">Buscar</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'core:contato' %}" class="btn btn-link text-white text-decoration-none">Sugerir
+                Solução</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'admin:index' %}" class="btn btn-link text-white text-decoration-none">Administração</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
 {% endblock header %}
 
 
 {% block footer %}
-<div class="row">
+  <div class="row">
     <div class="col-xs-12 col-md-8">
-        <p>&copy; 2013 - {% now "Y" %}. Eletrônica, some rights reserved.</p>
+      <p>&copy; 2013 - {% now "Y" %}. Eletrônica.</p>
     </div>
-
-    <div class="col-xs-6 col-md-4">
-        <p class="text-right"><a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a></p>
-    </div>
-</div>
+  </div>
 {% endblock footer %}

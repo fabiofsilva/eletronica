@@ -1,50 +1,42 @@
+<h3 class="fs-4 fw-semibold text-dark mb-3">Resultados Encontrados ({{ consertos.paginator.count }})</h3>
+
 {% if consertos %}
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered table-condensed">
-            <thead>
-              <tr class="active">
-                <th>#</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Defeito</th>
-              </tr>
-            </thead>
-            {% for conserto in consertos %}
-                <tbody>
-                    <tr class="{% cycle 'info' '' %}">
-                        <td><a href="{{ conserto.get_absolute_url }}">{{ conserto.pk }}</a></td>
-                        <td>{{ conserto.modelo.marca }}</td>
-                        <td>{{ conserto.modelo.descricao }}</td>
-                        <td>{{ conserto.defeito }}</td>  
-                    </tr>
-                </tbody>
-            {% endfor %}
-        </table>  
-    </div>
+  <ul class="list-unstyled space-y-3">
+    {% for conserto in consertos %}
+      <li class="list-group-item bg-white p-3 rounded shadow-sm mb-2">
+          <a class="fw-semibold text-primary-blue mb-1" href="{{ conserto.get_absolute_url }}">Defeito: {{ conserto.defeito }}</a>
+          <p class="small text-muted mb-0">Modelo: {{ conserto.modelo.descricao }} | Marca: {{ conserto.modelo.marca }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <nav aria-label="Navegação de Resultados">
+    <ul class="pagination justify-content-center mt-4">
+      <li class="page-item {% if not consertos.has_previous %}disabled{% endif %}">
+        <a href="#"
+           {% if consertos.has_previous %}class="page-link pagination-link" data-page="{{ consertos.previous_page_number }}"{% else %}class="page-link"{% endif %}
+           aria-label="Anterior">
+          <span aria-hidden="true">«</span>
+        </a>
+      </li>
 
-    <div class="text-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination center">
-                {% if consertos.has_previous %}
-                    <li><a href="#" onclick="repair_search({{ consertos.previous_page_number }})" aria-label="Previous">Previous</a></li>
-                {% endif %}
+      {% for pagenum in consertos.page_range %}
+        {% if not pagenum %}
+          <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+        {% elif pagenum == consertos.number %}
+          <li class="page-item active"><a href="#" class="page-link pagination-link" data-page="{{ pagenum }}">{{ pagenum }}</a></li>
+        {% else %}
+          <li class="page-item"><a href="#" class="page-link pagination-link" data-page="{{ pagenum }}">{{ pagenum }}</a></li>
+        {% endif %}
+      {% endfor %}
 
-                {% for pagenum in consertos.page_range %}  
-                  {% if not pagenum %} 
-                      <li><a href="#">...</a></li>  
-                  {% elif pagenum == consertos.number %}
-                      <li class="active"><span>{{ pagenum }}</span></li>
-                  {% else %}
-                      <li><a href="#" onclick="repair_search({{ pagenum }})">{{ pagenum }}</a></li>  
-                  {% endif %}
-                {% endfor %}
-
-                {% if consertos.has_next %}
-                    <li><a href="#" onclick="repair_search({{ consertos.next_page_number }})" aria-label="Next">Next</a></li>
-                {% endif %}    
-            </ul>  
-        </nav>
-    </div>  
+      <li class="page-item {% if not consertos.has_next %}disabled{% endif %}">
+        <a href="#" {% if consertos.has_next %}class="page-link pagination-link" data-page="{{ consertos.next_page_number }}"{% else %}class="page-link"{% endif %}
+           aria-label="Próximo">
+          <span aria-hidden="true">»</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 {% else %}
-    <p>Nenhum resultado encontrado</p>
+  <p>Nenhum resultado encontrado</p>
 {% endif %}

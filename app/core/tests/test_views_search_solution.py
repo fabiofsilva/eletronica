@@ -24,7 +24,7 @@ class SearchRepairTest(TestCase):
         self.assertContains(self.resp, '<input', 3)
         self.assertContains(self.resp, '<div id="results"')
         self.assertContains(self.resp, 'type="text"', 2)
-        self.assertContains(self.resp, 'type="button"')
+        self.assertContains(self.resp, 'type="submit"')
 
     def test_csrf(self):
         """HTML deve conter csrf token"""
@@ -50,13 +50,21 @@ class SearchRepairListTest(TestCase):
         self.assertTemplateUsed(self.resp, 'core/conserto_list.html')
 
     def test_html(self):
-        """HTML deve conter uma tabela com lista de consertos"""
-        self.assertContains(self.resp, '<table')
-        self.assertContains(self.resp, f'<a href="/consertos/{self.conserto_pk}/">')
-        self.assertContains(self.resp, '<nav aria-label="Page navigation"')
-        self.assertContains(self.resp, '<li class="active"><span>1</span></li>')
-        self.assertContains(self.resp, '<li><a href="#" onclick="repair_search(2)">2</a></li>')
-        self.assertContains(self.resp, '<a href="#" onclick="repair_search(2)" aria-label="Next">Next</a>')
+        """HTML deve conter uma lista de consertos e paginação"""
+        self.assertContains(self.resp, '<ul class="list-unstyled space-y-3"')
+        self.assertContains(self.resp, f'href="/consertos/{self.conserto_pk}/">Defeito: ')
+        self.assertContains(self.resp, '<nav aria-label="Navegação de Resultados"')
+        # Teste da renderização dos botões anterior e próximo
+        self.assertContains(self.resp, '<span aria-hidden="true">', 2)
+        # Teste da renderização dos botões de paginação
+        self.assertContains(
+            self.resp,
+            '<li class="page-item active"><a href="#" class="page-link pagination-link" data-page="1">1</a></li>',
+        )
+        self.assertContains(
+            self.resp,
+            '<li class="page-item"><a href="#" class="page-link pagination-link" data-page="2">2</a></li>'
+        )
 
     def test_context(self):
         """Contexto deve conter uma instância de Page"""
@@ -92,9 +100,7 @@ class SearchRepairListFilterTest(TestCase):
     def result_expected(self, data):
         """Verifica se a resposta contém o conserto CCE/HPS-2071 e exclui o conserto PHILCO/PC-1416."""
         resp = self.client.post(r('core:conserto_list'), data)
-        self.assertContains(resp, '<td>CCE</td>')
-        self.assertContains(resp, '<td>HPS-2071</td>')
-        self.assertContains(resp, '<td>NÃO LIGA</td>')
-        self.assertNotContains(resp, '<td>PHILCO</td>')
-        self.assertNotContains(resp, '<td>PC-1416</td>')
-        self.assertNotContains(resp, '<td>FONTE ALTA</td>')
+        self.assertContains(resp, 'NÃO LIGA</a>')
+        self.assertContains(resp, '<p class="small text-muted mb-0">Modelo: HPS-2071 | Marca: CCE</p>')
+        self.assertNotContains(resp, 'FONTE ALTA</a>')
+        self.assertNotContains(resp, '<p class="small text-muted mb-0">Modelo: PC-1416 | Marca: PHILCO</p>')
