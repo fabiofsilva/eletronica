@@ -1,13 +1,29 @@
 {% extends 'core/base_site.html' %}
 
 {% block content %}
-<h3>{{ conserto.modelo }} - {{ conserto.defeito.descricao }}</h3>
-{% for solucao in conserto.solucao_set.all %}
-<div class="well">
-    <h4>Solução #{{ forloop.counter }}:</h3>
-    <p>{{ solucao.solucao }}</p>
-</div>
-{% endfor %}
+  <h2 class="fs-2 fw-bolder text-primary-blue mb-2">Detalhe do Conserto</h2>
+  <p class="fs-5 text-secondary-cyan fw-medium mb-4 border-bottom pb-3">
+    {{ conserto.modelo }} - Defeito: {{ conserto.defeito }}
+  </p>
 
-<div><a class="btn btn-default" href="{% url 'core:search_repair' %}">Voltar</a></div>  
+  <div class="space-y-4">
+    <section class="mb-4">
+      <h3 class="fs-4 fw-semibold text-dark border-left-accent ps-3 mb-3">Diagnóstico e Sintomas</h3>
+      <p class="text-secondary-emphasis lh-base bg-background-light p-3 rounded">{{ conserto.diagnostico|default_if_none:"Sem diagnóstico"|safe }}</p>
+    </section>
+
+    <section class="mb-4">
+      <h3 class="fs-4 fw-semibold text-dark border-left-accent ps-3 mb-3">Solução (Passos Detalhados)</h3>
+      <ol class="list-group list-group-numbered ms-3 p-0">
+        {% for solucao in conserto.solucao_set.all %}
+          <li class="list-group-item border-0 p-0 mb-2">{{ solucao.solucao|safe }}</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </div>
+
+  <a href="{% url 'core:search_repair' %}" class="btn btn-secondary mt-4 py-2 px-4 rounded-3 shadow-sm">Voltar para a
+    Busca</a>
+  <a href="{% url 'core:contato' %}" class="btn bg-accent-green text-white mt-4 ms-3 py-2 px-4 rounded-3 shadow-sm">Sugerir
+    Solução</a>
 {% endblock content %}

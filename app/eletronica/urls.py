@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 admin.autodiscover()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'img/favicon.ico', permanent=True)),
     path('', include('core.urls'))
 ]
 

@@ -40,6 +40,7 @@ class Defeito(models.Model):
 class Conserto(models.Model):
     modelo = models.ForeignKey('Modelo', verbose_name=_('Modelo'), on_delete=models.PROTECT)
     defeito = models.ForeignKey('Defeito', verbose_name=_('Defeito'), on_delete=models.PROTECT)
+    diagnostico = models.TextField(verbose_name=_('Diagnostico e Sintomas'), null=True)
 
     class Meta:
         unique_together = ('modelo', 'defeito')

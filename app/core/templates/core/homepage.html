@@ -1,7 +1,44 @@
 {% extends 'core/base_site.html' %}
 
 {% block content %}
-<div class="jumbotron">
-    <p>Bem-vindo ao site de dicas de consertos em aparelhos eletrônicos.</p>
-</div>
+  <h2 class="fs-2 fw-bolder text-primary-blue mb-3">Bem-vindo(a) à Base de Conhecimento Eletrônico</h2>
+
+  <p class="lead text-secondary mb-4">Seu repositório centralizado para diagnóstico rápido e soluções de defeitos em
+    equipamentos eletrônicos. Utilize as opções abaixo para iniciar sua jornada ou contribuir com a comunidade.</p>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card bg-secondary-cyan text-white shadow-xl h-100">
+        <div class="card-body p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-3" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <h3 class="fs-4 fw-semibold mb-2">Buscar Soluções</h3>
+          <p class="card-text opacity-75 mb-4">Encontre diagnósticos e soluções detalhadas para modelos e defeitos
+            específicos de forma rápida e precisa.</p>
+          <a href="{% url 'core:search_repair' %}" class="btn btn-light text-secondary-cyan fw-bold w-100 py-2">INICIAR
+            BUSCA</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card bg-accent-green text-white shadow-xl h-100">
+        <div class="card-body p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-3" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <h3 class="fs-4 fw-semibold mb-2">Sugerir Solução</h3>
+          <p class="card-text opacity-75 mb-4">Contribua com a base de conhecimento enviando novos diagnósticos ou
+            aprimoramentos. Ajude a comunidade!</p>
+          <a href="{% url 'core:contato' %}" class="btn btn-light text-accent-green fw-bold w-100 py-2">
+            ENVIAR SUGESTÃO</a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

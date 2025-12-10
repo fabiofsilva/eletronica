@@ -9,7 +9,7 @@ class ConsertoModelTest(TestCase):
         marca = Marca.objects.create(descricao='Marca')
         modelo = marca.modelo_set.create(descricao='Modelo')
         defeito = Defeito.objects.create(descricao='Defeito')
-        self.conserto = Conserto.objects.create(modelo=modelo, defeito=defeito)
+        self.conserto = Conserto.objects.create(modelo=modelo, defeito=defeito, diagnostico='Diagnóstico')
 
     def test_create(self):
         """Deve criar um conserto"""
@@ -25,11 +25,11 @@ class ConsertoUniqueTest(TestCase):
         marca = Marca.objects.create(descricao='Marca')
         self.modelo = marca.modelo_set.create(descricao='Modelo')
         self.defeito = Defeito.objects.create(descricao='Defeito')
-        Conserto.objects.create(modelo=self.modelo, defeito=self.defeito)
+        Conserto.objects.create(modelo=self.modelo, defeito=self.defeito, diagnostico='Diagnóstico')
 
     def test_unique(self):
         """Defeito + Modelo devem ser únicos"""
-        conserto = Conserto(modelo=self.modelo, defeito=self.defeito)
+        conserto = Conserto(modelo=self.modelo, defeito=self.defeito, diagnostico='Diagnóstico')
         self.assertRaises(IntegrityError, conserto.save)
 
 
@@ -38,7 +38,7 @@ class SolucaoModelTest(TestCase):
         marca = Marca.objects.create(descricao='Marca')
         modelo = marca.modelo_set.create(descricao='Modelo')
         defeito = Defeito.objects.create(descricao='Defeito')
-        conserto = Conserto.objects.create(modelo=modelo, defeito=defeito)
+        conserto = Conserto.objects.create(modelo=modelo, defeito=defeito, diagnostico='Diagnóstico')
         self.solucao = conserto.solucao_set.create(solucao='Solução')
 
     def test_create(self):
