@@ -1,6 +1,7 @@
-from django.test import TestCase
 from django.db import IntegrityError
-from eletronica.core.models import Defeito
+from django.test import TestCase
+
+from core.models import Defeito
 
 
 class DefeitoModelTest(TestCase):
@@ -9,7 +10,8 @@ class DefeitoModelTest(TestCase):
 
     def test_create(self):
         """Deve criar um tipo defeito"""
-        self.assertEqual(1, self.defeito.pk)
+        self.assertIsNotNone(self.defeito.pk)
+        self.assertEqual(1, Defeito.objects.count())
 
     def test_str(self):
         """A representação da instância deve retornar a descrição"""

@@ -14,7 +14,12 @@ Scripts
 .settings
 .project
 .pydevproject
-eletronica/static
 .env
 .coverage
 .idea
+.venv
+*.sqlite3
+__pycache__/
+media/
+/static
+development.py
