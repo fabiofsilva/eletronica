@@ -1,0 +1,36 @@
+{% extends 'core/base_site.html' %}
+{% load static crispy_forms_tags %}
+
+{% block content %}
+  <h2 class="fs-2 fw-bolder text-primary-blue mb-4 border-bottom pb-2">Contribuir: Sugerir Solução</h2>
+  <p class="text-secondary mb-4">Se você encontrou uma solução que não está em nossa base, utilize o formulário para
+    enviar sua sugestão diretamente ao administrador.</p>
+
+  <form method="post" action="." class="needs-validation">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.email|as_crispy_field }}
+    </div>
+
+    <div class="mb-4">
+      {{ form.sugestao|as_crispy_field }}
+    </div>
+
+    <div class="p-3 bg-light rounded border border-gray mb-4">
+      {{ form.captcha|as_crispy_field }}
+      <a href="#" class="captcha-refresh text-secondary ms-2" style="font-size: 1.2rem;" title="Recarregar Imagem">
+        <i class="fas fa-sync-alt"></i>
+      </a>
+    </div>
+
+    <button type="submit" class="btn bg-accent-green text-white fw-semibold w-100 py-2 shadow-md">
+      ENVIAR SUGESTÃO PARA O ADMINISTRADOR
+    </button>
+  </form>
+{% endblock content %}
+
+{% block js %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'js/refresh-captcha.js' %}"></script>
+{% endblock js %}

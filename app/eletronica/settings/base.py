@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'captcha',
     'core',
 ]
 
@@ -125,27 +128,45 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Crispy Forms configuration
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_SUBJECT_PREFIX = env('EMAIL_SUBJECT_PREFIX', default='')
 EMAIL_HOST = env('EMAIL_HOST', default='')
 EMAIL_PORT = env('EMAIL_PORT', default=25)
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)
 EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=False)
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+# settings.py
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOGS_DIR, exist_ok=True)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
         'require_debug_false': {'()': 'django.utils.log.RequireDebugFalse'},
         'require_debug_true': {'()': 'django.utils.log.RequireDebugTrue'},
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -158,12 +179,25 @@ LOGGING = {
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
         },
+        'rotating_file_handler': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'django_general_error.log'),
+            'formatter': 'verbose',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'proposal': {
+            'handlers': ['rotating_file_handler'],
+            'level': 'ERROR',
+            'propagate': False,
         },
     },
 }
