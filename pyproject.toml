@@ -4,8 +4,11 @@ version = "0.1.0"
 description = "Plataforma web para consulta de diagnóstico de defeitos em equipamentos eletrônicos"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "crispy-bootstrap5>=2025.6",
     "django<5.3",
+    "django-crispy-forms>=2.5",
     "django-environ>=0.12.0",
+    "django-simple-captcha>=0.6.3",
     "psycopg>=3.3.2",
 ]
 

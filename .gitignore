@@ -22,4 +22,5 @@ Scripts
 __pycache__/
 media/
 /static
+/logs
 development.py
