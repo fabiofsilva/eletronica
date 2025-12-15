@@ -1,9 +1,13 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import RedirectView
 
 admin.autodiscover()
+
+admin.site.site_header = _('Eletrônica Administração')
+admin.site.site_title = _('Site de administração Eletrônica')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
