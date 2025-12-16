@@ -8,13 +8,25 @@ class SolucaoInline(admin.StackedInline):
     extra = 1
 
 
+@admin.register(Marca)
+class MarcaAdmin(admin.ModelAdmin):
+    search_fields = ['descricao']
+
+
+@admin.register(Modelo)
+class ModeloAdmin(admin.ModelAdmin):
+    search_fields = ['descricao', 'marca__descricao']
+    autocomplete_fields = ['marca']
+
+
+@admin.register(Defeito)
+class DefeitoAdmin(admin.ModelAdmin):
+    search_fields = ['descricao']
+
+
+@admin.register(Conserto)
 class ConsertoAdmin(admin.ModelAdmin):
-    model = Conserto
     inlines = [SolucaoInline]
     ordering = ('modelo__descricao', 'defeito__descricao')
-
-
-admin.site.register(Marca, admin.ModelAdmin)
-admin.site.register(Modelo, admin.ModelAdmin)
-admin.site.register(Defeito, admin.ModelAdmin)
-admin.site.register(Conserto, ConsertoAdmin)
+    search_fields = ['modelo__descricao', 'defeito__descricao']
+    autocomplete_fields = ['defeito', 'modelo']
