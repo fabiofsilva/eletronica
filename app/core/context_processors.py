@@ -20,5 +20,5 @@ def seo_defaults(request):
         'seo_title': _('Plataforma de Diagnóstico'),
         'seo_description': _('Encontre diagnósticos, defeitos e soluções técnicas para diversos modelos.'),
         'noindex': False,
-        'seo_image': request.build_absolute_uri(static('img/og-diagnostico-eletronicos.png')),
+        'seo_image': request.build_absolute_uri(static('img/og-diagnostico-eletronicos.jpg')),
     }
