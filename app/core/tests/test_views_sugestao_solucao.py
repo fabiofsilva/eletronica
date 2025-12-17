@@ -105,3 +105,8 @@ class SugestaoSolucaoViewTest(TestCase):
 
         # 3. Verifica se o erro do campo está presente
         self.assertIn('Este campo é obrigatório.', response.content.decode())
+
+    def test_sugestao_solucao_is_noindex(self):
+        """Contexto deve ter seo no index (noxindex=True)"""
+        response = self.client.get(SUGESTAO_URL)
+        self.assertTrue(response.context['noindex'])

@@ -8,10 +8,10 @@ from core.models import Conserto
 class ConsertoDetailTest(TestCase):
     def setUp(self):
         modelo = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-2071')
-        conserto = baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA')
+        conserto = baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA', diagnostico='TESTE')
         baker.make('core.Solucao', conserto=conserto, solucao='Ver capacitor C1', _quantity=2)
         conserto.solucao_set.create()
-        self.resp = self.client.get(r('core:conserto_detail', kwargs={'pk': conserto.pk}))
+        self.resp = self.client.get(r('core:conserto_detail', kwargs={'slug': conserto.slug}))
 
     def test_get(self):
         """GET deve retornar status code 200"""
@@ -30,3 +30,26 @@ class ConsertoDetailTest(TestCase):
         """Html deve conter informações do conserto e soluções"""
         self.assertContains(self.resp, 'CCE - HPS-2071 - Defeito: NÃO LIGA')
         self.assertContains(self.resp, 'Ver capacitor C1', 2)
+
+    def test_conserto_detail_seo(self):
+        """Contexto deve ter seo_title e seo_description customizado"""
+        self.assertIn('HPS-2071 - NÃO LIGA', self.resp.context['seo_title'])
+        self.assertIn('TESTE', self.resp.context['seo_description'])
+
+
+class ConsertoDetailLegacySeoTest(TestCase):
+    def setUp(self):
+        modelo = baker.make('core.Modelo', marca__descricao='CCE', descricao='HPS-3000')
+        conserto = baker.make('core.Conserto', modelo=modelo, defeito__descricao='NÃO LIGA', diagnostico=None)
+        self.resp = self.client.get(r('core:conserto_detail', kwargs={'slug': conserto.slug}))
+
+    def test_seo_description_sem_diagnostico(self):
+        """
+        Registros antigos sem diagnóstico devem gerar seo_description
+        contendo a descrição do modelo e a descrição do defeito no texto.
+        """
+        seo_description = self.resp.context['seo_description']
+
+        self.assertTrue(seo_description)
+        self.assertIn('NÃO LIGA', seo_description)
+        self.assertIn('HPS-3000', seo_description)
