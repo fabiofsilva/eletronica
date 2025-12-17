@@ -38,7 +38,7 @@ class SearchRepairTest(TestCase):
 class SearchRepairListTest(TestCase):
     def setUp(self):
         conserto = baker.make('core.Conserto', 30)
-        self.conserto_pk = conserto[0].pk
+        self.conserto_slug = conserto[0].slug
         self.resp = self.client.post(r('core:conserto_list'))
 
     def test_post(self):
@@ -52,7 +52,7 @@ class SearchRepairListTest(TestCase):
     def test_html(self):
         """HTML deve conter uma lista de consertos e paginação"""
         self.assertContains(self.resp, '<ul class="list-unstyled space-y-3"')
-        self.assertContains(self.resp, f'href="/consertos/{self.conserto_pk}/">Defeito: ')
+        self.assertContains(self.resp, f'href="/consertos/{self.conserto_slug}/">Defeito: ')
         self.assertContains(self.resp, '<nav aria-label="Navegação de Resultados"')
         # Teste da renderização dos botões anterior e próximo
         self.assertContains(self.resp, '<span aria-hidden="true">', 2)

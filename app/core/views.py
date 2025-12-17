@@ -46,9 +46,24 @@ def add_filter(request, dictionary, field, field_name='', field_lookup='__iconta
         dictionary.update({fname + field_lookup: value})
 
 
-def conserto_detail(request, pk):
-    conserto = get_object_or_404(Conserto, pk=pk)
-    return render(request, 'core/conserto_detail.html', {'conserto': conserto})
+def conserto_detail(request, slug):
+    conserto = get_object_or_404(Conserto.objects.select_related('modelo', 'defeito'), slug=slug)
+
+    if conserto.diagnostico:
+        seo_description = conserto.diagnostico
+    else:
+        seo_description = (
+            f'Diagnóstico do defeito {conserto.defeito.descricao} '
+            f'no modelo {conserto.modelo.descricao}. '
+            'Veja sintomas comuns, possíveis causas e soluções.'
+        )
+
+    context = {
+        'conserto': conserto,
+        'seo_title': f'{conserto.modelo.descricao} - {conserto.defeito}',
+        'seo_description': seo_description,
+    }
+    return render(request, 'core/conserto_detail.html', context)
 
 
 def sugestao_solucao(request):
@@ -62,4 +77,4 @@ def sugestao_solucao(request):
             messages.success(request, 'Obrigado! Os administradores foram notificados sobre a sua sugestão.')
             return redirect('core:homepage')
 
-    return render(request, 'core/sugestao_solucao.html', context={'form': form})
+    return render(request, 'core/sugestao_solucao.html', context={'form': form, 'noindex': True})
