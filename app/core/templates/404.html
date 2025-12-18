@@ -1,0 +1,9 @@
+{% extends 'base_site.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'Page not found' %}{% endblock %}
+
+{% block content %}
+  <h2 class="fs-2 fw-bolder text-primary-blue mb-3">{% translate 'Page not found' %}</h2>
+  <p class="lead text-secondary mb-4">{% translate 'We’re sorry, but the requested page could not be found.' %}</p>
+{% endblock %}

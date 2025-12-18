@@ -1,0 +1,9 @@
+{% extends 'base_site.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'Server error (500)' %}{% endblock %}
+
+{% block content %}
+  <h2 class="fs-2 fw-bolder text-primary-blue mb-3">{% translate 'Server Error <em>(500)</em>' %}</h2>
+  <p class="lead text-secondary mb-4">{% translate 'There’s been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.' %}</p>
+{% endblock %}
