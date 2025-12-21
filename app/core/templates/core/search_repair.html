@@ -5,31 +5,32 @@
   <h2 class="fs-2 fw-bolder text-primary-blue mb-4 border-bottom pb-2">Buscar Consertos</h2>
   <p class="text-secondary mb-4">Utilize os filtros abaixo para refinar sua pesquisa.</p>
 
-  <form id="search_form" class="form-inline" action="{% url 'core:consertos-list' %}">
-    <div class="row g-3 mb-5 p-4 bg-background-light rounded shadow-sm">
-      <div class="col-md-4">
-        <label for="search-marca" class="form-label small fw-medium text-secondary">Marca</label>
-        <input type="text" id="search-marca" placeholder="Ex: Samsung, Sony, LG" class="form-control"
-               name="marca" aria-label="Marca">
-      </div>
-      <div class="col-md-4">
-        <label for="search-modelo" class="form-label small fw-medium text-secondary">Modelo</label>
-        <input type="text" id="search-modelo" placeholder="Ex: TV LED X42" class="form-control" aria-label="Modelo"
-               name="modelo">
-      </div>
-      <div class="col-md-4">
-        <label for="search-defeito" class="form-label small fw-medium text-secondary">Defeito</label>
-        <select id="search-defeito" class="form-select" name="defeito">
-          <option value="">Selecione um defeito</option>
-          {% for defeito in defeitos %}
-            <option value="{{ defeito.pk }}">{{ defeito.descricao }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-12 pt-3">
-        <button type="submit" class="btn bg-secondary-cyan text-white fw-semibold w-100 py-2 shadow-sm">BUSCAR</button>
-      </div>
-    </div>
+  <form id="search_form" class="form-inline" action="{% url 'core:consertos-list' %}"
+        data-detail-url="{% url 'core:conserto_detail' '__slug__' %}">
+    <div class=" row g-3 mb-5 p-4 bg-background-light rounded shadow-sm">
+  <div class="col-md-4">
+    <label for="search-marca" class="form-label small fw-medium text-secondary">Marca</label>
+    <input type="text" id="search-marca" placeholder="Ex: Samsung, Sony, LG" class="form-control"
+           name="marca" aria-label="Marca">
+  </div>
+  <div class="col-md-4">
+    <label for="search-modelo" class="form-label small fw-medium text-secondary">Modelo</label>
+    <input type="text" id="search-modelo" placeholder="Ex: TV LED X42" class="form-control" aria-label="Modelo"
+           name="modelo">
+  </div>
+  <div class="col-md-4">
+    <label for="search-defeito" class="form-label small fw-medium text-secondary">Defeito</label>
+    <select id="search-defeito" class="form-select" name="defeito">
+      <option value="">Selecione um defeito</option>
+      {% for defeito in defeitos %}
+        <option value="{{ defeito.pk }}">{{ defeito.descricao }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-12 pt-3">
+    <button type="submit" class="btn bg-secondary-cyan text-white fw-semibold w-100 py-2 shadow-sm">BUSCAR</button>
+  </div>
+  </div>
   </form>
 
   <div id="results"></div>
