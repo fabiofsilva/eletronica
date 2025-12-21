@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <a class="fw-semibold text-primary-blue mb-1" href="${apiUrl}${item.id}/">
                     Defeito: ${item.defeito_descricao || item.defeito}
                 </a>
-                <p class="small text-muted mb-0">Modelo: ${item.modelo_nome} | Marca: ${item.marca_nome}</p>
+                <p class="small text-muted mb-0">Modelo: ${item.modelo_descricao} | Marca: ${item.marca_descricao}</p>
             </li>
         `).join('');
 
