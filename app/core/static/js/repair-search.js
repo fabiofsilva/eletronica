@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const itemsHtml = data.results.map(item => `
             <li class="list-group-item bg-white p-3 rounded shadow-sm mb-2">
-                <a class="fw-semibold text-primary-blue mb-1" href="${apiUrl}${item.id}/">
+                <a class="fw-semibold text-primary-blue mb-1" href="${apiUrl}${item.slug}/">
                     Defeito: ${item.defeito_descricao || item.defeito}
                 </a>
                 <p class="small text-muted mb-0">Modelo: ${item.modelo_descricao} | Marca: ${item.marca_descricao}</p>
