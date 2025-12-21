@@ -1,12 +1,11 @@
 {% extends 'base_site.html' %}
+{% load static %}
 
 {% block content %}
   <h2 class="fs-2 fw-bolder text-primary-blue mb-4 border-bottom pb-2">Buscar Consertos</h2>
   <p class="text-secondary mb-4">Utilize os filtros abaixo para refinar sua pesquisa.</p>
 
-  <!-- Área de Filtros -->
-  <form id="search_form" method="POST" action="." class="form-inline">
-    {% csrf_token %}
+  <form id="search_form" class="form-inline" action="{% url 'core:consertos-list' %}">
     <div class="row g-3 mb-5 p-4 bg-background-light rounded shadow-sm">
       <div class="col-md-4">
         <label for="search-marca" class="form-label small fw-medium text-secondary">Marca</label>
@@ -38,43 +37,5 @@
 
 {% block js %}
   {{ block.super }}
-  <script>
-      document.addEventListener('DOMContentLoaded', function () {
-
-          const form = document.getElementById('search_form');
-          const resultsDiv = document.getElementById('results');
-
-          function repair_search(page) {
-              let formData = new FormData(form);
-              formData.append('page', page);
-
-              fetch("{% url 'core:conserto_list' %}", {
-                  method: 'POST',
-                  body: formData
-              })
-                  .then(r => r.text())
-                  .then(html => {
-                      resultsDiv.innerHTML = html;
-                  })
-                  .catch(err => console.error(err));
-          }
-
-          form.addEventListener('submit', function (event) {
-              event.preventDefault();
-              repair_search(1);
-          });
-
-          resultsDiv.addEventListener('click', function (event) {
-              const link = event.target.closest('.pagination-link');
-              if (!link) return;
-
-              event.preventDefault();
-
-              const page = link.dataset.page;
-              repair_search(page);
-          });
-
-          repair_search(1);
-      });
-  </script>
+  <script type="text/javascript" src="{% static 'js/repair-search.js' %}"></script>
 {% endblock js %}

@@ -3,6 +3,8 @@ from django.urls import reverse as r
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+from .managers import ConsertoQuerySet
+
 
 class Marca(models.Model):
     descricao = models.CharField(verbose_name=_('Marca'), max_length=50)
@@ -43,6 +45,8 @@ class Conserto(models.Model):
     defeito = models.ForeignKey('Defeito', verbose_name=_('Defeito'), on_delete=models.PROTECT)
     diagnostico = models.TextField(verbose_name=_('Diagnostico e Sintomas'), null=True)
     slug = models.SlugField(verbose_name=_('Slug'), max_length=200, db_index=True, unique=True, editable=False)
+
+    objects = ConsertoQuerySet.as_manager()
 
     class Meta:
         unique_together = ('modelo', 'defeito')
