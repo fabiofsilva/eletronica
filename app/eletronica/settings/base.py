@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'captcha',
     'core',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,15 @@ STORAGES = {
     'staticfiles': {
         'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
     },
+}
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.ElidedPagination',
+    'PAGE_SIZE': 20,
 }
 
 # Crispy Forms configuration
