@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('search_form');
     const resultsDiv = document.getElementById('results');
     const submitBtn = form.querySelector('button[type="submit"]');
-    const apiUrl = form.getAttribute('action');
 
     let isSearching = false;
     // Template centralizado de carregamento
@@ -25,8 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsDiv.innerHTML = loaderHtml;
         resultsDiv.style.opacity = '0.8';
 
+        const apiUrl = form.getAttribute('action');
         const formData = new FormData(form);
         const params = new URLSearchParams();
+        // Converte os dados do formulário em parâmetros de URL,
+        // ignorando campos vazios para manter a URL limpa e evitar filtros nulos no backend.
         for (let [key, value] of formData.entries()) {
             if (value) params.append(key, value);
         }
@@ -59,14 +61,20 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const itemsHtml = data.results.map(item => `
+        const detailUrlTemplate = form.dataset.detailUrl;
+
+        const itemsHtml = data.results.map(item => {
+            const finalDetailUrl = detailUrlTemplate.replace('__slug__', item.slug);
+
+            return `
             <li class="list-group-item bg-white p-3 rounded shadow-sm mb-2">
-                <a class="fw-semibold text-primary-blue mb-1" href="${apiUrl}${item.slug}/">
-                    Defeito: ${item.defeito_descricao || item.defeito}
+                <a class="fw-semibold text-primary-blue mb-1" href="${finalDetailUrl}">
+                    Defeito: ${item.defeito_descricao}
                 </a>
                 <p class="small text-muted mb-0">Modelo: ${item.modelo_descricao} | Marca: ${item.marca_descricao}</p>
             </li>
-        `).join('');
+        `;
+        }).join('');
 
         const paginationHtml = data.page_range.map(p => {
             if (p === '...') return `<li class="page-item disabled"><span class="page-link border-0">...</span></li>`;
@@ -90,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </nav>
         `;
     }
+
     // Eventos
     form.addEventListener('submit', function (event) {
         event.preventDefault();
