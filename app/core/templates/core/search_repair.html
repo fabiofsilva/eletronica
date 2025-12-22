@@ -5,8 +5,7 @@
   <h2 class="fs-2 fw-bolder text-primary-blue mb-4 border-bottom pb-2">Buscar Consertos</h2>
   <p class="text-secondary mb-4">Utilize os filtros abaixo para refinar sua pesquisa.</p>
 
-  <form id="search_form" class="form-inline" action="{% url 'core:consertos-list' %}"
-        data-detail-url="{% url 'core:conserto_detail' '__slug__' %}">
+  <form id="search_form" class="form-inline" action="{% url 'core:consertos-list' %}">
     <div class=" row g-3 mb-5 p-4 bg-background-light rounded shadow-sm">
   <div class="col-md-4">
     <label for="search-marca" class="form-label small fw-medium text-secondary">Marca</label>

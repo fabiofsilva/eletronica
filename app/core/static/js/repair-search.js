@@ -61,14 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const detailUrlTemplate = form.dataset.detailUrl;
-
         const itemsHtml = data.results.map(item => {
-            const finalDetailUrl = detailUrlTemplate.replace('__slug__', item.slug);
-
             return `
             <li class="list-group-item bg-white p-3 rounded shadow-sm mb-2">
-                <a class="fw-semibold text-primary-blue mb-1" href="${finalDetailUrl}">
+                <a class="fw-semibold text-primary-blue mb-1" href="${item.url}">
                     Defeito: ${item.defeito_descricao}
                 </a>
                 <p class="small text-muted mb-0">Modelo: ${item.modelo_descricao} | Marca: ${item.marca_descricao}</p>
